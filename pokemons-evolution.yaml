@@ -1,0 +1,138 @@
+namespace: pokemons-evolution
+pokemons-evolution:
+  defines: runnable
+  metadata:
+    name: pokemons-evolution
+    description: A blockchain-based Pokemon game with its own crypto tokens.
+    icon: https://emojiapi.dev/api/v1/joystick.svg
+  containers:
+    pokemons-evolution:
+      build: .
+  connections:
+    ethereum:
+      target: ethereum-mainnet/base
+      service: service
+    goerli:
+      target: ethereum-goerli-testnet/base
+      service: service
+    matic:
+      target: pokemons-evolution/seed
+      service: peer
+    bsc:
+      target: binance-smart-chain-testnet/base
+      service: service
+    fuji:
+      target: avalanche-fuji-testnet/base
+      service: service
+    fantom:
+      target: fantom-testnet/base
+      service: service
+  variables:
+    private-key:
+      env: PRIVATE_KEY
+      type: string
+      description: Private key for signing transactions and interacting with blockchain
+      value: '!!!SETME!!!'
+    goerli-api:
+      env: GOERLI_API
+      type: string
+      description: API endpoint for interacting with Ethereum Goerli Testnet
+      value: <- connection-hostname("goerli")
+    mainnet-api:
+      env: MAINNET_API
+      type: string
+      description: API endpoint for interacting with Ethereum Mainnet
+      value: <- connection-hostname("ethereum")
+    matic-api:
+      env: MATIC_API
+      type: string
+      description: API endpoint for interacting with Polygon (Matic) Network
+      value: <- connection-hostname("matic")
+    mumbai-api:
+      env: MUMBAI_API
+      type: string
+      description: API endpoint for interacting with Polygon (Matic) Mumbai Testnet
+      value: '!!!SETME!!!'
+    polygonscan-key:
+      env: POLYGONSCAN_KEY
+      type: string
+      description: Key for interacting with PolygonScan
+      value: '!!!SETME!!!'
+    bsc-testnet-api:
+      env: BSC_TESTNET_API
+      type: string
+      description: API endpoint for interacting with Binance Smart Chain Testnet
+      value: <- connection-hostname("bsc")
+    bscscan-key:
+      env: BSCSCAN_KEY
+      type: string
+      description: Key for interacting with BscScan
+      value: '!!!SETME!!!'
+    avalanche-fuji-api:
+      env: AVALANCHE_FUJI_API
+      type: string
+      description: API endpoint for interacting with Avalanche Fuji Testnet
+      value: <- connection-hostname("fuji")
+    snowtrace-key:
+      env: SNOWTRACE_KEY
+      type: string
+      description: Key for interacting with Snowtrace
+      value: '!!!SETME!!!'
+    fantom-testnet-api:
+      env: FANTOM_TESTNET_API
+      type: string
+      description: API endpoint for interacting with Fantom Testnet
+      value: <- connection-hostname("fantom")
+    ftmscan-key:
+      env: FTMSCAN_KEY
+      type: string
+      description: Key for interacting with Ftmscan
+      value: '!!!SETME!!!'
+    initial-level-supply:
+      env: INITIAL_LEVEL_SUPPLY
+      type: string
+      description: Initial supply of LEVEL token
+      value: '!!!SETME!!!'
+    level-token-price:
+      env: LEVEL_TOKEN_PRICE
+      type: string
+      description: Price of LEVEL token
+      value: '!!!SETME!!!'
+    stones-token-price:
+      env: STONES_TOKEN_PRICE
+      type: string
+      description: Price of STONES token
+      value: '!!!SETME!!!'
+    mint-pokemon-fee:
+      env: MINT_POKEMON_FEE
+      type: string
+      description: Fee for minting a new Pokemon
+      value: '!!!SETME!!!'
+    upgrade-in-level-fee:
+      env: UPGRADE_IN_LEVEL_FEE
+      type: string
+      description: Fee for upgrading a Pokemon's level
+      value: '!!!SETME!!!'
+    max-supply:
+      env: MAX_SUPPLY
+      type: string
+      description: Maximum supply of Pokemon
+      value: '!!!SETME!!!'
+    level-address:
+      env: LEVEL_ADDRESS
+      type: string
+      description: Address of the LEVEL token contract
+      value: '!!!SETME!!!'
+    stones-address:
+      env: STONES_ADDRESS
+      type: string
+      description: Address of the STONES token contract
+      value: '!!!SETME!!!'
+seed:
+  defines: runnable
+  inherits: radicle/seed
+stack:
+  defines: group
+  runnable-list:
+    - pokemons-evolution/pokemons-evolution
+    - pokemons-evolution/seed
